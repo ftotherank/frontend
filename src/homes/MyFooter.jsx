@@ -44,7 +44,7 @@ const MyFooter = () => {
           </div>
         </div>
         <div className="w-full bg-gray-700 px-4 py-6 sm:flex sm:items-center sm:justify-between text-white">
-          <Footer.Copyright href="#" by="resh21331.cs@rmkec.ac.in" year={2022} className='text-white'/>
+          <Footer.Copyright href="#" by="officialfrank2001@gmail.com" year={2025} className='text-white'/>
           <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
             <Footer.Icon href="#" icon={BsFacebook} />
             <Footer.Icon href="#" icon={BsInstagram} />
