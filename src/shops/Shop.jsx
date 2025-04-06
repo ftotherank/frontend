@@ -4,7 +4,11 @@ import Navbar from "../Components/Navbar"; // Adjust the import path if necessar
 
 const Shop = () => {
   const [books, setBooks] = useState([]);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(() => {
+    // Retrieve cart from localStorage or initialize as an empty array
+    const savedCart = localStorage.getItem('cart');
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
   const [expandedBookId, setExpandedBookId] = useState(null); // State to track expanded description
 
   useEffect(() => {
@@ -12,6 +16,11 @@ const Shop = () => {
       .then(res => res.json())
       .then(data => setBooks(data));
   }, []);
+
+  useEffect(() => {
+    // Save cart to localStorage whenever it changes
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
 
   const addToCart = (book) => {
     setCart((prevCart) => {
