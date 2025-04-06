@@ -1,35 +1,63 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { Card } from "flowbite-react";
-import Image from "../assets/profile.jpg";
+import Navbar from "../Components/Navbar"; // Adjust the import path if necessary
 
 const Shop = () => {
   const [books, setBooks] = useState([]);
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/all-books").then(res => res.json()).then(data => setBooks(data));
-  },[])
+    fetch("http://localhost:3000/all-books")
+      .then(res => res.json())
+      .then(data => setBooks(data));
+  }, []);
+
+  const addToCart = (book) => {
+    setCart((prevCart) => {
+      // Check if the book already exists in the cart
+      const existingBook = prevCart.find((item) => item._id === book._id);
+      if (existingBook) {
+        // If the book exists, increase its quantity
+        return prevCart.map((item) =>
+          item._id === book._id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        // If the book does not exist, add it as a new entry
+        return [...prevCart, { ...book, quantity: 1 }];
+      }
+    });
+  };
+
   return (
     <div className='mt-28 px-4 lg:px-24'>
+      <Navbar cart={cart} setCart={setCart} />
       <h1 className='text-5xl my-12 font-bold text-center'>All Books are here</h1>
       <div className='grid gap-8 my-12 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid-cols-1'>
-        {
-          books.map(book => <Card className='shadow-2xl'
-            >
-              <img src={book.image_url} alt="" className='h-96 my-5 mx-5'/>
+        {books.map(book => (
+          <Card className='shadow-2xl' key={book._id}>
+            <img src={book.image_url} alt="" className='h-96 my-5 mx-5' />
             <h5 className="text-1xl font-bold tracking-tight text-gray-900 dark:text-white mx-3">
-              <p>
-                {book.book_title}
-              </p>
+              <p>{book.book_title}</p>
             </h5>
-            <p className="font-normal text-gray-500 dark:text-gray-400 mx-3">
-              Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.
+            <p
+              className="font-normal text-gray-500 dark:text-gray-400 mx-3"
+              style={{ height: '4rem', overflow: 'hidden' }}
+            >
+              {book.book_description}
             </p>
-            <button className='bg-blue-700 font-semibold text-white py-2 rounded mx-3 my-3 hover:bg-black'>Buy Now</button>
-          </Card>)
-        }
+            <button
+              className='bg-blue-700 font-semibold text-white py-2 rounded mx-3 my-3 hover:bg-black'
+              onClick={() => addToCart(book)}
+            >
+              Buy Now
+            </button>
+          </Card>
+        ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Shop
+export default Shop;

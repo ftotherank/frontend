@@ -19,6 +19,7 @@ import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Logout from "../Components/Logout";
 import Profile from "../dashboard/Profile";
 import Details from "../dashboard/Details";
+import Checkout from "../pages/Checkout";
 
 
 const router = createBrowserRouter([
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
         path: "/book/:id",
         element: <SingleBook />,
         loader: ({params}) => fetch(`http://localhost:3000/book/${params.id}`)
+      }
+      ,{
+        path: "/checkout",
+        element: <Checkout />
       }
     ]
   },
