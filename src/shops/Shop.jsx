@@ -5,6 +5,7 @@ import Navbar from "../Components/Navbar"; // Adjust the import path if necessar
 const Shop = () => {
   const [books, setBooks] = useState([]);
   const [cart, setCart] = useState([]);
+  const [expandedBookId, setExpandedBookId] = useState(null); // State to track expanded description
 
   useEffect(() => {
     fetch("http://localhost:3000/all-books")
@@ -30,6 +31,10 @@ const Shop = () => {
     });
   };
 
+  const toggleDescription = (bookId) => {
+    setExpandedBookId((prevId) => (prevId === bookId ? null : bookId));
+  };
+
   return (
     <div className='mt-28 px-4 lg:px-24'>
       <Navbar cart={cart} setCart={setCart} />
@@ -43,10 +48,16 @@ const Shop = () => {
             </h5>
             <p
               className="font-normal text-gray-500 dark:text-gray-400 mx-3"
-              style={{ height: '4rem', overflow: 'hidden' }}
+              style={{ height: expandedBookId === book._id ? 'auto' : '4rem', overflow: 'hidden' }}
             >
               {book.book_description}
             </p>
+            <button
+              className='text-blue-700 font-semibold mx-3 my-2'
+              onClick={() => toggleDescription(book._id)}
+            >
+              {expandedBookId === book._id ? 'Read Less' : 'Read More'}
+            </button>
             <button
               className='bg-blue-700 font-semibold text-white py-2 rounded mx-3 my-3 hover:bg-black'
               onClick={() => addToCart(book)}
