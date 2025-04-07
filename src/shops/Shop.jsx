@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from "flowbite-react";
 import Navbar from "../Components/Navbar"; // Adjust the import path if necessary
+import BookCards from "../Components/BookCards"; // Import BookCards component
 
 const Shop = () => {
   const [books, setBooks] = useState([]);
@@ -48,6 +49,7 @@ const Shop = () => {
     <div className='mt-28 px-4 lg:px-24'>
       <Navbar cart={cart} setCart={setCart} />
       <h1 className='text-5xl my-12 font-bold text-center'>All Books are here</h1>
+      <BookCards books={books} headline="Featured Books" addToCart={addToCart} />
       <div className='grid gap-8 my-12 lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid-cols-1'>
         {books.map(book => (
           <Card className='shadow-2xl' key={book._id}>

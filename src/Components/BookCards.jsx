@@ -14,8 +14,7 @@ import { FaCartShopping } from 'react-icons/fa6';
 // import required modules
 import { Pagination } from 'swiper/modules';
 
-const BookCards = ({books, headline}) => {
-
+const BookCards = ({ books, headline, addToCart }) => { // Accept addToCart as a prop
   return (
     <div className='my-16 px-4 lg:px-24'>
       <h2 className='text-5xl text-center font-bold text-black my-5'>{headline}</h2>
@@ -48,13 +47,20 @@ const BookCards = ({books, headline}) => {
       >
         {
           books.map(book => <SwiperSlide key={book._id}>
+            <div className='relative'>
             <Link to={`/book/${book._id}`}>
-              <div className='relative'>
                 <img src={book.image_url} alt=""/>
-                <div className='absolute top-3 right-3 bg-blue-600 hover:bg-black p-2 rounded'>
-                  <FaCartShopping className='w-4 h-4 text-white'/>
-                </div>
+              </Link>
+              <div
+                className='absolute top-3 right-3 bg-blue-600 hover:bg-black p-2 rounded cursor-pointer'
+                onClick={(e) => {
+                  e.preventDefault(); // Prevent navigation
+                  addToCart(book); // Add to cart
+                }}
+              >
+                <FaCartShopping className='w-4 h-4 text-white' />
               </div>
+            </div>
               <div>
                 <div>
                 <h3>{book.book_title}</h3>
@@ -64,7 +70,6 @@ const BookCards = ({books, headline}) => {
                   <p>Ksh{book.book_price}</p>
                 </div>
               </div>
-            </Link>
           </SwiperSlide>)
         }
         
