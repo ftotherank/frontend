@@ -48,7 +48,7 @@ const BookCards = ({ books, headline, addToCart }) => { // Accept addToCart as a
         {
           books.map(book => <SwiperSlide key={book._id}>
             <div className='relative'>
-            <Link to={`/book/${book._id}`}>
+              <Link to={`/book/${book._id}`}>
                 <img src={book.image_url} alt=""/>
               </Link>
               <div
@@ -61,15 +61,15 @@ const BookCards = ({ books, headline, addToCart }) => { // Accept addToCart as a
                 <FaCartShopping className='w-4 h-4 text-white' />
               </div>
             </div>
+            <div>
               <div>
-                <div>
-                <h3>{book.book_title}</h3>
-                <p>{book.authorName}</p>
-                </div>
-                <div>
-                  <p>Ksh{book.book_price}</p>
-                </div>
+              <h3>{book.book_title}</h3>
+              <p>{book.authorName}</p>
               </div>
+              <div>
+                <p>Ksh{book.book_price}</p>
+              </div>
+            </div>
           </SwiperSlide>)
         }
         
